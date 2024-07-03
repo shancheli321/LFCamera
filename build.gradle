@@ -1,0 +1,71 @@
+
+buildscript {
+
+    repositories {
+
+        // google()指的是Google自家的仓库，比如我们使用的很多第一方库，如RecyclerView, Jetpack Components等等就是从这里拉取的
+        // 在gradle4.1之后，添加了新的语法google()，用于引用google自有的仓库。很方便，但是不便于研究被依赖的aar源文件
+        google()
+
+        // mavenCentral是由sonatype.org维护的Maven仓库。可以在repo1.maven.org/maven2/看到整个仓库。
+        mavenCentral()
+
+        // JitPack提供的仓库
+        maven { url 'https://jitpack.io' }
+
+        // jcenter是由 bintray.com维护的Maven仓库。可以在jcenter.bintray.com/看到整个仓库的内容。
+        // 不管是jcenter还是mavenCentral，两者都是Maven仓库
+        jcenter()
+        jcenter() {
+            url 'https://jcenter.bintray.com/'
+        }
+
+        // 引用本地仓库
+        mavenLocal()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.0.1"
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+
+        maven { url "https://gitee.com/ezy/repo/raw/cosmo/"}
+
+        // banner
+        maven { url "https://s01.oss.sonatype.org/content/groups/public" }
+
+        // 阿里云镜像
+//        maven {
+//            url " https://maven.aliyun.com/nexus/content/repositories/google"
+//        }
+//        maven {
+//            url "https://maven.aliyun.com/nexus/content/repositories/jcenter"
+//        }
+//        maven {
+//
+//            // jcenter和mavenCentral的聚合仓库
+//            url "https://maven.aliyun.com/nexus/content/groups/public"
+//        }
+//
+//        maven {
+//
+//            // jcenter和mavenCentral的聚合仓库
+//            url "https://maven.aliyun.com/repository/public"
+//        }
+
+
+    }
+}
+
+
+
+
+
