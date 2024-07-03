@@ -1,0 +1,40 @@
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.shancheli321'
+
+
+android {
+
+    compileSdkVersion 34
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        minSdkVersion 26
+        targetSdkVersion 34
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+//afterEvaluate {
+//    android.libraryVariants.each {variant->
+//        publishing.publications.create(variant.name,MavenPublication){
+//            from components.findByName(variant.name)
+//            groupId = 'com.github.shancheli321'
+//            artifactId = 'LFUtils'
+//            version = '1.0.9'
+//        }
+//    }
+//}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.6.1'
+
+}
