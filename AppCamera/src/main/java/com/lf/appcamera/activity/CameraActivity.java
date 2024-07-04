@@ -83,7 +83,7 @@ public class CameraActivity extends AppCompatActivity {
         jCameraView = findViewById(R.id.jcameraview);
 
         //设置视频保存路径
-        jCameraView.setSaveVideoPath(getCacheDir() + File.separator + "matisse");
+        jCameraView.setSaveVideoPath(FileUtil.getRootPath(CameraActivity.this));
         jCameraView.setFeatures(getFeature());
         jCameraView.setMediaQuality(JCameraView.MEDIA_QUALITY_MIDDLE);
         jCameraView.setErrorLisenter(new ErrorListener() {
@@ -107,7 +107,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void captureSuccess(Bitmap bitmap) {
                 //获取图片bitmap
-                String path = FileUtil.saveBitmap("LFCamera", bitmap);
+                String path = FileUtil.saveBitmap(CameraActivity.this, bitmap);
                 Intent intent = new Intent();
                 intent.putExtra(MatisseConst.EXTRA_RESULT_CAPTURE_IMAGE_PATH, path);
                 setResult(RESULT_OK, intent);
@@ -117,7 +117,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void recordSuccess(String url, Bitmap firstFrame) {
                 //获取视频路径
-                String path = FileUtil.saveBitmap("LFCamera", firstFrame);
+                String path = FileUtil.saveBitmap(CameraActivity.this, firstFrame);
                 Intent intent = new Intent();
                 intent.putExtra(MatisseConst.EXTRA_RESULT_CAPTURE_IMAGE_PATH, path);
                 intent.putExtra(MatisseConst.EXTRA_RESULT_CAPTURE_VIDEO_PATH, url);

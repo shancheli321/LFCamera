@@ -1,5 +1,6 @@
 package com.lf.cameralibrary.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Environment;
 
@@ -17,35 +18,31 @@ import java.io.IOException;
  * =====================================
  */
 public class FileUtil {
-    private static final File parentPath = Environment.getExternalStorageDirectory();
-    private static String storagePath = "";
-    private static String DST_FOLDER_NAME = "JCamera";
 
-    private static String initPath() {
-        if (storagePath.equals("")) {
-            storagePath = parentPath.getAbsolutePath() + File.separator + DST_FOLDER_NAME;
-            File f = new File(storagePath);
-            if (!f.exists()) {
-                f.mkdir();
-            }
+    public static String getRootPath(Context context) {
+        String rootPath = context.getExternalFilesDir("").getPath() + File.separator + "LFCamera";
+        File file = new File(rootPath);
+        if (!file.exists()) {
+            file.mkdirs();
         }
-        return storagePath;
+        return rootPath;
     }
 
-    public static String saveBitmap(String dir, Bitmap b) {
-        DST_FOLDER_NAME = dir;
-        String path = initPath();
+    public static String saveBitmap(Context context, Bitmap bitmap) {
+        String rootPath = getRootPath(context);
+
         long dataTake = System.currentTimeMillis();
-        String jpegName = path + File.separator + "picture_" + dataTake + ".jpg";
+        String picPath = rootPath + File.separator + "picture_" + dataTake + ".png";
+        File picFile = new File(picPath);
+
         try {
-            FileOutputStream fout = new FileOutputStream(jpegName);
+            FileOutputStream fout = new FileOutputStream(picFile);
             BufferedOutputStream bos = new BufferedOutputStream(fout);
-            b.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
             bos.flush();
             bos.close();
-            return jpegName;
+            return picPath;
         } catch (IOException e) {
-            e.printStackTrace();
             return "";
         }
     }
@@ -57,13 +54,5 @@ public class FileUtil {
             result = file.delete();
         }
         return result;
-    }
-
-    public static boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
     }
 }
