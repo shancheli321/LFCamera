@@ -1,15 +1,10 @@
 package com.lf.appcamera.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -20,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.lf.R;
 import com.lf.appcamera.CaptureMode;
 import com.lf.appcamera.MatisseConst;
-import com.lf.appcamera.SelectionSpec;
+import com.lf.appcamera.AppCameraSpec;
 import com.lf.cameralibrary.JCameraView;
 import com.lf.cameralibrary.listener.ClickListener;
 import com.lf.cameralibrary.listener.ErrorListener;
@@ -31,11 +26,10 @@ import java.io.File;
 
 public class CameraActivity extends AppCompatActivity {
     private JCameraView jCameraView;
-    private SelectionSpec mSpec;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mSpec = SelectionSpec.getInstance();
-        setTheme(mSpec.themeId);
+        setTheme(R.style.Matisse_Zhihu);
         super.onCreate(savedInstanceState);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -47,9 +41,9 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private int getFeature(){
-        if(SelectionSpec.getInstance().captureMode== CaptureMode.All){
+        if(AppCameraSpec.getInstance().captureMode== CaptureMode.All){
             return JCameraView.BUTTON_STATE_BOTH;
-        }else if(SelectionSpec.getInstance().captureMode== CaptureMode.Image){
+        }else if(AppCameraSpec.getInstance().captureMode== CaptureMode.Image){
             return JCameraView.BUTTON_STATE_ONLY_CAPTURE;
         }else {
             return JCameraView.BUTTON_STATE_ONLY_RECORDER;

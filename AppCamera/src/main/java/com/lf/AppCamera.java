@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
+import com.lf.appcamera.AppCameraSpec;
 import com.lf.appcamera.CaptureMode;
 import com.lf.appcamera.MatisseConst;
 import com.lf.appcamera.MimeType;
@@ -32,8 +33,6 @@ public class AppCamera {
     private final WeakReference<Activity> mContext;
     private final WeakReference<Fragment> mFragment;
 
-    private CameraBuilder cameraBuilder;
-
     private AppCamera(Activity activity) {
         this(activity, null);
     }
@@ -45,7 +44,7 @@ public class AppCamera {
     private AppCamera(Activity activity, Fragment fragment) {
         mContext = new WeakReference<>(activity);
         mFragment = new WeakReference<>(fragment);
-        cameraBuilder = new CameraBuilder();
+        AppCameraSpec.getCleanInstance();
     }
 
     /**
@@ -72,37 +71,6 @@ public class AppCamera {
      */
     public static AppCamera from(Fragment fragment) {
         return new AppCamera(fragment);
-    }
-
-    /**
-     * Obtain user selected media' {@link Uri} list in the starting Activity or Fragment.
-     *
-     * @param data Intent passed by {@link Activity#onActivityResult(int, int, Intent)} or
-     *             {@link Fragment#onActivityResult(int, int, Intent)}.
-     * @return User selected media' {@link Uri} list.
-     */
-    public static List<Uri> obtainSelectUriResult(Intent data) {
-        return data.getParcelableArrayListExtra(MatisseConst.EXTRA_RESULT_SELECTION);
-    }
-
-    /**
-     * Obtain user selected media path list in the starting Activity or Fragment.
-     *
-     * @param data Intent passed by {@link Activity#onActivityResult(int, int, Intent)} or
-     *             {@link Fragment#onActivityResult(int, int, Intent)}.
-     * @return User selected media path list.
-     */
-    public static List<String> obtainSelectPathResult(Intent data) {
-        return data.getStringArrayListExtra(MatisseConst.EXTRA_RESULT_SELECTION_PATH);
-    }
-
-    /**
-     * 获取裁剪的结果，不管是选择照片裁剪还是拍摄照片裁剪
-     * @param data
-     * @return
-     */
-    public static String obtainCropResult(Intent data) {
-        return data.getStringExtra(MatisseConst.EXTRA_RESULT_CROP_PATH);
     }
 
     /**
@@ -145,7 +113,7 @@ public class AppCamera {
     }
 
     public AppCamera setMode(CaptureMode mode) {
-        cameraBuilder.setCaptureMode(mode);
+        AppCameraSpec.getInstance().captureMode = mode;
         return this;
     }
 
@@ -162,7 +130,12 @@ public class AppCamera {
 
         //自动进行权限检查
         //录制所需权限
-        String[] permissions = new String[]{"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
+        String[] permissions;
+        if (AppCameraSpec.getCleanInstance().captureMode == CaptureMode.Image) {
+            permissions = new String[]{"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
+        } else {
+            permissions = new String[]{"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA", "android.permission.RECORD_AUDIO"};
+        }
 
         if (!XXPermissions.isGranted(mContext.get(), permissions)) {
             XXPermissions.with(mContext.get())
@@ -199,20 +172,6 @@ public class AppCamera {
             fragment.startActivityForResult(intent, requestCode);
         } else {
             getActivity().startActivityForResult(intent, requestCode);
-        }
-    }
-
-    public class CameraBuilder {
-
-        public CaptureMode captureMode = CaptureMode.All;
-
-
-        public CaptureMode getCaptureMode() {
-            return captureMode;
-        }
-
-        public void setCaptureMode(CaptureMode captureMode) {
-            this.captureMode = captureMode;
         }
     }
 }

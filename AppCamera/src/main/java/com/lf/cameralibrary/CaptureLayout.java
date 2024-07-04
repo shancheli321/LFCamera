@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lf.appcamera.CaptureMode;
-import com.lf.appcamera.SelectionSpec;
+import com.lf.appcamera.AppCameraSpec;
 import com.lf.cameralibrary.listener.CaptureListener;
 import com.lf.cameralibrary.listener.ClickListener;
 import com.lf.cameralibrary.listener.ReturnListener;
@@ -295,9 +295,9 @@ public class CaptureLayout extends FrameLayout {
     private String getTipText(){
         String imageTip = "轻触拍照";
         String videoTip = "长按摄像";
-        if(SelectionSpec.getInstance().captureMode== CaptureMode.All){
+        if(AppCameraSpec.getInstance().captureMode== CaptureMode.All){
             return imageTip + "，" + videoTip;
-        }else if(SelectionSpec.getInstance().captureMode== CaptureMode.Image){
+        }else if(AppCameraSpec.getInstance().captureMode== CaptureMode.Image){
             return imageTip;
         } else {
             return videoTip;
