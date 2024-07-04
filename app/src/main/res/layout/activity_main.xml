@@ -18,4 +18,14 @@
         android:gravity="center"
         android:text="点击拍照" />
 
+    <TextView
+        android:id="@+id/tv_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_toast"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="路径" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

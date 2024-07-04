@@ -8,5 +8,4 @@
     app:iconLeft="@drawable/ic_cross"
     app:iconMargin="20dp"
     app:iconSize="22dp"
-    app:iconSrc="@drawable/ic_camera"
-    tools:context=".appcamera.activity.CameraActivity" />
+    app:iconSrc="@drawable/ic_camera" />
