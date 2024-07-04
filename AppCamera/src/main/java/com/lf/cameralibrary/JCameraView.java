@@ -137,7 +137,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         iconSrc = a.getResourceId(R.styleable.JCameraView_iconSrc, R.drawable.ic_camera);
         iconLeft = a.getResourceId(R.styleable.JCameraView_iconLeft, 0);
         iconRight = a.getResourceId(R.styleable.JCameraView_iconRight, 0);
-        duration = a.getInteger(R.styleable.JCameraView_duration_max, 10 * 1000);       //没设置默认为10s
+        duration = a.getInteger(R.styleable.JCameraView_duration_max, 5 * 60 * 1000);       //没设置默认为10s
         a.recycle();
         initData();
         initView();
