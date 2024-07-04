@@ -23,12 +23,7 @@
 	
 	```
 AppCamera.from(MainActivity.this).setMode(CaptureMode.All).forResult(10001);
-	```
 	
-	回调
-	
-	
-	```
 	
 	@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
