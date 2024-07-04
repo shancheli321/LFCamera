@@ -22,15 +22,15 @@
 2. 使用
 	
 	```
-	AppCamera.from(MainActivity.this).setMode(CaptureMode.All).forResult(10001);
-	
+AppCamera.from(MainActivity.this).setMode(CaptureMode.All).forResult(10001);
 	```
 	
 	回调
 	
 	
 	```
-@Override
+	
+	@Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
