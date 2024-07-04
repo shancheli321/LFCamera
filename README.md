@@ -8,14 +8,14 @@
 1. 接入SDK
 
 	```
-		repositories {
-			mavenCentral()
-			maven { url 'https://jitpack.io' }
-		}
-		
-		dependencies {
-	        implementation 'com.github.shancheli321:LFCamera:0.0.1'
-		}
+	repositories {
+		mavenCentral()
+		maven { url 'https://jitpack.io' }
+	}
+	
+	dependencies {
+        implementation 'com.github.shancheli321:LFCamera:0.0.1'
+	}
 		
 	```
 
@@ -24,10 +24,10 @@
 	```
 	AppCamera.from(MainActivity.this).setMode(CaptureMode.All).forResult(10001);
 	
-	
 	```
 	
 	回调
+	
 	
 	```
 @Override
