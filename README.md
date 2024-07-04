@@ -22,7 +22,9 @@
 2. 使用
 	
 	```
-AppCamera.from(MainActivity.this).setMode(CaptureMode.All).forResult(10001);
+	AppCamera.from(MainActivity.this).setMode(CaptureMode.All).forResult(10001);
+	
+	
 	```
 	
 	回调
@@ -67,6 +69,6 @@ AppCamera.from(MainActivity.this).setMode(CaptureMode.All).forResult(10001);
 	}
 	```
 
-exclude ：打包时移除项目中的相关文件，不打入apk文件中
+	exclude ：打包时移除项目中的相关文件，不打入apk文件中
 
-pickFirst : 有多个匹配时只匹配第一个
+	pickFirst : 有多个匹配时只匹配第一个
