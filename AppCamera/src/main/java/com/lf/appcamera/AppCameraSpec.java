@@ -18,7 +18,7 @@ package com.lf.appcamera;
 
 public final class AppCameraSpec {
 
-    public CaptureMode captureMode = CaptureMode.Image;//默认可以
+    public CaptureMode captureMode = CaptureMode.All;//默认可以
 
     private AppCameraSpec() {
 

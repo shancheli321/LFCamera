@@ -16,7 +16,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application>
-        <activity android:name=".appcamera.activity.CameraActivity"/>
+        <activity android:name=".appcamera.activity.CameraActivity"
+        />
 
         <!-- 告知 XXPermissions 当前项目已经适配了分区存储特性 -->
         <meta-data
