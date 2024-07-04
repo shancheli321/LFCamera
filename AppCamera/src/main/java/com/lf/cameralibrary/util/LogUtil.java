@@ -1,6 +1,6 @@
 package com.lf.cameralibrary.util;
 
-import static com.lf.BuildConfig.DEBUG;
+import static com.lf.camera.BuildConfig.DEBUG;
 
 import android.util.Log;
 
@@ -16,7 +16,7 @@ import android.util.Log;
  */
 public class LogUtil {
 
-    private static final String DEFAULT_TAG = "CJT";
+    private static final String DEFAULT_TAG = "LFCamera--";
 
     public static void i(String tag, String msg) {
 //        if (DEBUG)

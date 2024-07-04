@@ -33,7 +33,7 @@ import android.view.View;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import com.lf.R;
+import com.lf.camera.R;
 
 public class CheckView extends View {
 

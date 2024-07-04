@@ -24,7 +24,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.RequiresApi;
 
-import com.lf.R;
+import com.lf.camera.R;
 import com.lf.cameralibrary.listener.CaptureListener;
 import com.lf.cameralibrary.listener.ClickListener;
 import com.lf.cameralibrary.listener.ErrorListener;

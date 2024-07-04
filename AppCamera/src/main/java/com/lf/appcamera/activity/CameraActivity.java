@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.lf.R;
+import com.lf.camera.R;
 import com.lf.appcamera.CaptureMode;
 import com.lf.appcamera.MatisseConst;
 import com.lf.appcamera.AppCameraSpec;

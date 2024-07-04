@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.lf">
+    package="com.lf.camera">
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
@@ -21,7 +21,7 @@
         tools:ignore="ScopedStorage" />
 
     <application>
-        <activity android:name=".appcamera.activity.CameraActivity"
+        <activity android:name="com.lf.appcamera.activity.CameraActivity"
         />
 
         <!-- 告知 XXPermissions 当前项目已经适配了分区存储特性 -->

@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.res.ResourcesCompat;
 
-import com.lf.R;
+import com.lf.camera.R;
 
 
 public class CheckRadioView extends AppCompatImageView {
