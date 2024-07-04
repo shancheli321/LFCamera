@@ -12,6 +12,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import com.hjq.permissions.OnPermissionCallback;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.lf.appcamera.CaptureMode;
 import com.lf.appcamera.MatisseConst;
 import com.lf.appcamera.MimeType;
@@ -159,36 +162,34 @@ public class AppCamera {
 
         //自动进行权限检查
         //录制所需权限
-//        if (!XXPermissions.isGranted(mContext.get(), Permission.CAMERA)) {
-//            XXPermissions.with(mContext.get())
-//                    // 申请单个权限
-//                    .permission(Permission.CAMERA)
-//                    // 申请多个权限
-////                    .permission(Permission.Group.CALENDAR)
-//                    .request(new OnPermissionCallback() {
-//
-//                        @Override
-//                        public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
-//                            if (!allGranted) {
-//                                Toast.makeText(activity, "没有权限，无法使用该功能", Toast.LENGTH_SHORT).show();
-//                                return;
-//                            }
-//                            gotoCamera(requestCode);
-//                        }
-//
-//                        @Override
-//                        public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
-//                            if (doNotAskAgain) {
-//                                // 如果是被永久拒绝就跳转到应用权限系统设置页面
-//                                XXPermissions.startPermissionActivity(mContext.get(), permissions);
-//                            } else {
-//
-//                            }
-//                        }
-//                    });
-//        } else {
+        String[] permissions = new String[]{"android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.CAMERA"};
+
+        if (!XXPermissions.isGranted(mContext.get(), permissions)) {
+            XXPermissions.with(mContext.get())
+                    .permission(permissions)
+                    .request(new OnPermissionCallback() {
+                        @Override
+                        public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+                            if (!allGranted) {
+                                Toast.makeText(activity, "没有权限，无法使用该功能", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            gotoCamera(requestCode);
+                        }
+
+                        @Override
+                        public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
+                            if (doNotAskAgain) {
+                                // 如果是被永久拒绝就跳转到应用权限系统设置页面
+                                XXPermissions.startPermissionActivity(mContext.get(), permissions);
+                            } else {
+
+                            }
+                        }
+                    });
+        } else {
             gotoCamera(requestCode);
-//        }
+        }
     }
 
     private void gotoCamera(int requestCode) {
@@ -203,7 +204,7 @@ public class AppCamera {
 
     public class CameraBuilder {
 
-        public CaptureMode captureMode;
+        public CaptureMode captureMode = CaptureMode.All;
 
 
         public CaptureMode getCaptureMode() {

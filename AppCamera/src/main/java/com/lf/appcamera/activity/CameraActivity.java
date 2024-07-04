@@ -37,8 +37,10 @@ public class CameraActivity extends AppCompatActivity {
         mSpec = SelectionSpec.getInstance();
         setTheme(mSpec.themeId);
         super.onCreate(savedInstanceState);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         setContentView(R.layout.activity_camera);
         jCameraView = findViewById(R.id.jcameraview);
         init();
