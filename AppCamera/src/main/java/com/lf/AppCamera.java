@@ -1,0 +1,217 @@
+package com.lf;
+
+
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+
+import com.lf.appcamera.CaptureMode;
+import com.lf.appcamera.MatisseConst;
+import com.lf.appcamera.MimeType;
+import com.lf.appcamera.activity.CameraActivity;
+
+import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * @date: 2024/7/3
+ */
+public class AppCamera {
+
+    private final WeakReference<Activity> mContext;
+    private final WeakReference<Fragment> mFragment;
+
+    private CameraBuilder cameraBuilder;
+
+    private AppCamera(Activity activity) {
+        this(activity, null);
+    }
+
+    private AppCamera(Fragment fragment) {
+        this(fragment.getActivity(), fragment);
+    }
+
+    private AppCamera(Activity activity, Fragment fragment) {
+        mContext = new WeakReference<>(activity);
+        mFragment = new WeakReference<>(fragment);
+        cameraBuilder = new CameraBuilder();
+    }
+
+    /**
+     * Start Matisse from an Activity.
+     * <p>
+     * This Activity's {@link Activity#onActivityResult(int, int, Intent)} will be called when user
+     * finishes selecting.
+     *
+     * @param activity Activity instance.
+     * @return Matisse instance.
+     */
+    public static AppCamera from(Activity activity) {
+        return new AppCamera(activity);
+    }
+
+    /**
+     * Start Matisse from a Fragment.
+     * <p>
+     * This Fragment's {@link Fragment#onActivityResult(int, int, Intent)} will be called when user
+     * finishes selecting.
+     *
+     * @param fragment Fragment instance.
+     * @return Matisse instance.
+     */
+    public static AppCamera from(Fragment fragment) {
+        return new AppCamera(fragment);
+    }
+
+    /**
+     * Obtain user selected media' {@link Uri} list in the starting Activity or Fragment.
+     *
+     * @param data Intent passed by {@link Activity#onActivityResult(int, int, Intent)} or
+     *             {@link Fragment#onActivityResult(int, int, Intent)}.
+     * @return User selected media' {@link Uri} list.
+     */
+    public static List<Uri> obtainSelectUriResult(Intent data) {
+        return data.getParcelableArrayListExtra(MatisseConst.EXTRA_RESULT_SELECTION);
+    }
+
+    /**
+     * Obtain user selected media path list in the starting Activity or Fragment.
+     *
+     * @param data Intent passed by {@link Activity#onActivityResult(int, int, Intent)} or
+     *             {@link Fragment#onActivityResult(int, int, Intent)}.
+     * @return User selected media path list.
+     */
+    public static List<String> obtainSelectPathResult(Intent data) {
+        return data.getStringArrayListExtra(MatisseConst.EXTRA_RESULT_SELECTION_PATH);
+    }
+
+    /**
+     * 获取裁剪的结果，不管是选择照片裁剪还是拍摄照片裁剪
+     * @param data
+     * @return
+     */
+    public static String obtainCropResult(Intent data) {
+        return data.getStringExtra(MatisseConst.EXTRA_RESULT_CROP_PATH);
+    }
+
+    /**
+     * 获取拍照或者录制的结果，如果是录制视频的话，则返回的是第一帧
+     * @param data
+     * @return
+     */
+    public static String obtainCaptureImageResult(Intent data) {
+        return data.getStringExtra(MatisseConst.EXTRA_RESULT_CAPTURE_IMAGE_PATH);
+    }
+
+    /**
+     * 获取录制视频的地址
+     * @param data
+     * @return
+     */
+    public static String obtainCaptureVideoResult(Intent data) {
+        return data.getStringExtra(MatisseConst.EXTRA_RESULT_CAPTURE_VIDEO_PATH);
+    }
+
+    /**
+     * Obtain state whether user decide to use selected media in original
+     *
+     * @param data Intent passed by {@link Activity#onActivityResult(int, int, Intent)} or
+     *             {@link Fragment#onActivityResult(int, int, Intent)}.
+     * @return Whether use original photo
+     */
+    public static boolean obtainOriginalState(Intent data) {
+        return data.getBooleanExtra(MatisseConst.EXTRA_RESULT_ORIGINAL_ENABLE, false);
+    }
+
+    @Nullable
+    Activity getActivity() {
+        return mContext.get();
+    }
+
+    @Nullable
+    Fragment getFragment() {
+        return mFragment != null ? mFragment.get() : null;
+    }
+
+    public AppCamera setMode(CaptureMode mode) {
+        cameraBuilder.setCaptureMode(mode);
+        return this;
+    }
+
+    /**
+     * Start to select media and wait for result.
+     *
+     * @param requestCode Identity of the request Activity or Fragment.
+     */
+    public void forResult(final int requestCode) {
+        final Activity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
+
+        //自动进行权限检查
+        //录制所需权限
+//        if (!XXPermissions.isGranted(mContext.get(), Permission.CAMERA)) {
+//            XXPermissions.with(mContext.get())
+//                    // 申请单个权限
+//                    .permission(Permission.CAMERA)
+//                    // 申请多个权限
+////                    .permission(Permission.Group.CALENDAR)
+//                    .request(new OnPermissionCallback() {
+//
+//                        @Override
+//                        public void onGranted(@NonNull List<String> permissions, boolean allGranted) {
+//                            if (!allGranted) {
+//                                Toast.makeText(activity, "没有权限，无法使用该功能", Toast.LENGTH_SHORT).show();
+//                                return;
+//                            }
+//                            gotoCamera(requestCode);
+//                        }
+//
+//                        @Override
+//                        public void onDenied(@NonNull List<String> permissions, boolean doNotAskAgain) {
+//                            if (doNotAskAgain) {
+//                                // 如果是被永久拒绝就跳转到应用权限系统设置页面
+//                                XXPermissions.startPermissionActivity(mContext.get(), permissions);
+//                            } else {
+//
+//                            }
+//                        }
+//                    });
+//        } else {
+            gotoCamera(requestCode);
+//        }
+    }
+
+    private void gotoCamera(int requestCode) {
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        Fragment fragment = getFragment();
+        if (fragment != null) {
+            fragment.startActivityForResult(intent, requestCode);
+        } else {
+            getActivity().startActivityForResult(intent, requestCode);
+        }
+    }
+
+    public class CameraBuilder {
+
+        public CaptureMode captureMode;
+
+
+        public CaptureMode getCaptureMode() {
+            return captureMode;
+        }
+
+        public void setCaptureMode(CaptureMode captureMode) {
+            this.captureMode = captureMode;
+        }
+    }
+}
