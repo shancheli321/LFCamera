@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -105,11 +106,13 @@ public class CameraActivity extends AppCompatActivity {
         //JCameraView监听
         jCameraView.setJCameraLisenter(new JCameraListener() {
             @Override
-            public void captureSuccess(Bitmap bitmap) {
+            public void captureSuccess(Bitmap bitmap, String imagePath) {
                 //获取图片bitmap
-                String path = FileUtil.saveBitmap(CameraActivity.this, bitmap);
+                if (TextUtils.isEmpty(imagePath)) {
+                    imagePath = FileUtil.saveBitmap(CameraActivity.this, bitmap);
+                }
                 Intent intent = new Intent();
-                intent.putExtra(MatisseConst.EXTRA_RESULT_CAPTURE_IMAGE_PATH, path);
+                intent.putExtra(MatisseConst.EXTRA_RESULT_CAPTURE_IMAGE_PATH, imagePath);
                 setResult(RESULT_OK, intent);
                 finish();
             }

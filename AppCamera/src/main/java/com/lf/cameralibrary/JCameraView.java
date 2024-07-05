@@ -99,6 +99,9 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     private float screenProp = 0f;
 
     private Bitmap captureBitmap;   //捕获的图片
+
+    private String imagePath;   //捕获的图片地址
+
     private Bitmap firstFrame;      //第一帧图片
     private String videoUrl;        //视频URL
 
@@ -469,7 +472,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             case TYPE_PICTURE:
                 mPhoto.setVisibility(INVISIBLE);
                 if (jCameraLisenter != null) {
-                    jCameraLisenter.captureSuccess(captureBitmap);
+                    jCameraLisenter.captureSuccess(captureBitmap, imagePath);
                 }
                 break;
             case TYPE_SHORT:
@@ -481,13 +484,14 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     }
 
     @Override
-    public void showPicture(Bitmap bitmap, boolean isVertical) {
+    public void showPicture(Bitmap bitmap, String imagePath, boolean isVertical) {
         if (isVertical) {
             mPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
         } else {
             mPhoto.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
         captureBitmap = bitmap;
+        this.imagePath = imagePath;
         mPhoto.setImageBitmap(bitmap);
         mPhoto.setVisibility(VISIBLE);
         mCaptureLayout.startAlphaAnimation();

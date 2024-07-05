@@ -479,11 +479,12 @@ public class CameraInterface implements Camera.PreviewCallback {
                 }
 
                 bitmap = createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                String path = FileUtil.saveBitmap(mSwitchView.getContext(), bitmap);
                 if (callback != null) {
                     if (nowAngle == 90 || nowAngle == 270) {
-                        callback.captureResult(bitmap, true);
+                        callback.captureResult(bitmap, path, true);
                     } else {
-                        callback.captureResult(bitmap, false);
+                        callback.captureResult(bitmap, path, false);
                     }
                 }
             }
@@ -750,7 +751,7 @@ public class CameraInterface implements Camera.PreviewCallback {
     }
 
     public interface TakePictureCallback {
-        void captureResult(Bitmap bitmap, boolean isVertical);
+        void captureResult(Bitmap bitmap, String imagePath, boolean isVertical);
     }
 
     public interface FocusCallback {

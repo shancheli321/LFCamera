@@ -15,7 +15,7 @@ public interface CameraView {
 
     void confirmState(int type);
 
-    void showPicture(Bitmap bitmap, boolean isVertical);
+    void showPicture(Bitmap bitmap, String path, boolean isVertical);
 
     void playVideo(Bitmap firstFrame, String url);
 

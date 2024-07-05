@@ -58,8 +58,8 @@ class PreviewState implements State {
     public void capture() {
         CameraInterface.getInstance().takePicture(new CameraInterface.TakePictureCallback() {
             @Override
-            public void captureResult(Bitmap bitmap, boolean isVertical) {
-                machine.getView().showPicture(bitmap, isVertical);
+            public void captureResult(Bitmap bitmap, String path, boolean isVertical) {
+                machine.getView().showPicture(bitmap, path, isVertical);
                 machine.setState(machine.getBorrowPictureState());
                 LogUtil.i("capture");
             }
