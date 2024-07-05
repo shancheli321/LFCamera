@@ -193,17 +193,25 @@ public class CaptureButton extends View {
     //录制结束
     private void recordEnd() {
         if (captureLisenter != null) {
-            if (recorded_time < min_duration)
+            if (recorded_time < min_duration) {
                 captureLisenter.recordShort(recorded_time);//回调录制时间过短
-            else
+                resetRecordAnim(false);  //重制按钮状态
+            } else {
                 captureLisenter.recordEnd(recorded_time);  //回调录制结束
+                resetRecordAnim(true);  //重制按钮状态
+            }
         }
-        resetRecordAnim();  //重制按钮状态
     }
 
+    /**
+     * @param isEnd
+     */
     //重制状态
-    private void resetRecordAnim() {
-        state = STATE_BAN;
+    private void resetRecordAnim(boolean isEnd) {
+
+        if (isEnd) {
+            state = STATE_BAN;
+        }
         progress = 0;       //重制进度
         invalidate();
         //还原按钮初始状态动画

@@ -49,10 +49,15 @@ public class FileUtil {
 
     public static boolean deleteFile(String url) {
         boolean result = false;
-        File file = new File(url);
-        if (file.exists()) {
-            result = file.delete();
+        try {
+
+            File file = new File(url);
+            if (file.exists()) {
+                result = file.delete();
+            }
+            return result;
+        } catch (Exception exception) {
+            return result;
         }
-        return result;
     }
 }

@@ -137,7 +137,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         iconSrc = a.getResourceId(R.styleable.JCameraView_iconSrc, R.drawable.ic_camera);
         iconLeft = a.getResourceId(R.styleable.JCameraView_iconLeft, 0);
         iconRight = a.getResourceId(R.styleable.JCameraView_iconRight, 0);
-        duration = a.getInteger(R.styleable.JCameraView_duration_max, 5 * 60 * 1000);       //没设置默认为10s
+        duration = a.getInteger(R.styleable.JCameraView_duration_max, 3 * 60 * 1000);       //没设置默认为10s
         a.recycle();
         initData();
         initView();
@@ -203,6 +203,9 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                 mCaptureLayout.setTextWithAnimation("录制时间过短");
                 mSwitchCamera.setVisibility(VISIBLE);
                 mFlashLamp.setVisibility(VISIBLE);
+
+                resetState(TYPE_DEFAULT);
+
                 postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -296,7 +299,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     public void onPause() {
         LogUtil.i("JCameraView onPause");
         stopVideo();
-        resetState(TYPE_PICTURE);
+        resetState(TYPE_SHORT);
         CameraInterface.getInstance().isPreview(false);
         CameraInterface.getInstance().unregisterSensorManager(mContext);
     }
@@ -430,19 +433,26 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                 FileUtil.deleteFile(videoUrl);
                 mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 machine.start(mVideoView.getHolder(), screenProp);
+                mSwitchCamera.setVisibility(VISIBLE);
+                mFlashLamp.setVisibility(VISIBLE);
+                mCaptureLayout.resetCaptureLayout();
                 break;
             case TYPE_PICTURE:
                 mPhoto.setVisibility(INVISIBLE);
+                mSwitchCamera.setVisibility(VISIBLE);
+                mFlashLamp.setVisibility(VISIBLE);
+                mCaptureLayout.resetCaptureLayout();
                 break;
             case TYPE_SHORT:
                 break;
             case TYPE_DEFAULT:
                 mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                mSwitchCamera.setVisibility(VISIBLE);
+                mFlashLamp.setVisibility(VISIBLE);
+                mCaptureLayout.resetCaptureLayout();
                 break;
         }
-        mSwitchCamera.setVisibility(VISIBLE);
-        mFlashLamp.setVisibility(VISIBLE);
-        mCaptureLayout.resetCaptureLayout();
+
     }
 
     @Override
@@ -465,9 +475,9 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             case TYPE_SHORT:
                 break;
             case TYPE_DEFAULT:
+                mCaptureLayout.resetCaptureLayout();
                 break;
         }
-        mCaptureLayout.resetCaptureLayout();
     }
 
     @Override
