@@ -479,7 +479,10 @@ public class CameraInterface implements Camera.PreviewCallback {
                 }
 
                 bitmap = createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                String path = FileUtil.saveBitmap(mSwitchView.getContext(), bitmap);
+                String path = "";
+                if (mSwitchView != null) {
+                    path = FileUtil.saveBitmap(mFlashLamp.getContext(), bitmap);
+                }
                 if (callback != null) {
                     if (nowAngle == 90 || nowAngle == 270) {
                         callback.captureResult(bitmap, path, true);
