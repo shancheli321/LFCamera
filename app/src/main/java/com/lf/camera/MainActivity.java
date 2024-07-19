@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 LFCameraFileUtil.clearCatch(MainActivity.this);
-                LFCameraUtil.getInstance().startFileChooser(MainActivity.this, "", new LFCameraListener() {
+                LFCameraUtil.getInstance().startFileChooser(MainActivity.this, new LFCameraListener() {
                     @Override
                     public void onCanceled() {
 
@@ -145,17 +145,18 @@ public class MainActivity extends AppCompatActivity {
             String capturePath = null;
             String videoPath = null;
 
-            if((videoPath = AppCamera.obtainCaptureVideoResult(data))!=null){
+            if ((videoPath = AppCamera.obtainCaptureVideoResult(data))!=null) {
                 //录制的视频
                 capturePath = AppCamera.obtainCaptureImageResult(data);
                 tvPath.setText("视频路径："+videoPath
                         +" \n 第一帧图片："+capturePath);
                 Log.d("111---", videoPath);
 
-            }else if((capturePath = AppCamera.obtainCaptureImageResult(data))!=null){
+            } else if((capturePath = AppCamera.obtainCaptureImageResult(data))!=null) {
                 tvPath.setText("拍照路径："+capturePath);
                 Log.d("111---", capturePath);
             }
         }
     }
+
 }

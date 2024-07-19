@@ -12,15 +12,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -203,23 +207,23 @@ public class LFCameraUtil {
     /**
      * 启动文件选择器(Activity)
      */
-    public void startFileChooser(Activity activity, String mime, LFCameraListener callback) {
+    public void startFileChooser(Activity activity, LFCameraListener callback) {
         this.callback = callback;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType(mime);
-        activity.startActivityForResult(intent, PICK_IMAGE_CHOOSER_REQUEST_CODE);
+        intent.setType("*/*");
+        activity.startActivityForResult(intent, PICK_FILE_CHOOSER_REQUEST_CODE);
     }
 
     /**
      * 启动文件选择器(Fragment)
      */
-    public void startFileChooser(Fragment fragment, String mime, LFCameraListener callback) {
+    public void startFileChooser(Fragment fragment, LFCameraListener callback) {
         this.callback = callback;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType(mime);
-        fragment.startActivityForResult(intent, PICK_IMAGE_CHOOSER_REQUEST_CODE);
+        intent.setType("*/*");
+        fragment.startActivityForResult(intent, PICK_FILE_CHOOSER_REQUEST_CODE);
     }
 
     /**
@@ -267,8 +271,8 @@ public class LFCameraUtil {
             } else if (requestCode == PICK_IMAGE_CHOOSER_REQUEST_CODE) { // 相册
                 if (data != null && data.getData() != null) {
                     Uri selectedImageUri = data.getData();
-                    Bitmap bitmap = getBitmapFromUri(context, selectedImageUri);
-                    String path = getPathFromUri(context, 1, selectedImageUri);
+                    Bitmap bitmap = LFCameraUriUtil.getBitmapFromUri(context, selectedImageUri);
+                    String path = LFCameraUriUtil.getPathFromUri(context, 1, selectedImageUri);
                     if (callback != null) {
                         callback.onPicked(path, bitmap);
                     }
@@ -277,7 +281,16 @@ public class LFCameraUtil {
             } else if (requestCode == PICK_VIDEO_CHOOSER_REQUEST_CODE) {
                 if (data != null && data.getData() != null) {
                     Uri selectedVideoUri = data.getData();
-                    String path = getPathFromUri(context, 2, selectedVideoUri);
+                    String path = LFCameraUriUtil.getPathFromUri(context, 2, selectedVideoUri);
+                    if (callback != null) {
+                        callback.onPicked(path, null);
+                    }
+                    outputFilePath = null;
+                }
+            } else if (requestCode == PICK_FILE_CHOOSER_REQUEST_CODE) {
+                if (data != null && data.getData() != null) {
+                    Uri selectedFileUri = data.getData();
+                    String path = LFCameraUriUtil.getPathFromUri(context, selectedFileUri);
                     if (callback != null) {
                         callback.onPicked(path, null);
                     }
@@ -330,45 +343,5 @@ public class LFCameraUtil {
         return  "com.lf.camera.fileProvider";
     }
 
-    /**
-     * @return
-     */
-    private Bitmap getBitmapFromUri(Context context, Uri uri) {
-        try {
-            InputStream inputStream = context.getContentResolver().openInputStream(uri);
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-            return bitmap;
-        } catch (FileNotFoundException e) {
-            return null;
-        }
-    }
-
-    /**
-     * 从Uri中读取文件路径
-     * @param context
-     * @param type 1 图片  2 视频
-     * @param uri
-     * @return
-     */
-    private String getPathFromUri(Context context, int type, Uri uri) {
-        String dataType = null;
-        if (type == 1) {
-            dataType = MediaStore.Images.Media.DATA;
-        } else if (type == 2) {
-            dataType = MediaStore.Video.Media.DATA;
-        }
-
-        String[] projection = { dataType };
-        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            int column_index = cursor.getColumnIndexOrThrow(dataType);
-            cursor.moveToFirst();
-            String path = cursor.getString(column_index);
-            cursor.close();
-            return path;
-        }
-        return null;
-    }
 
 }
