@@ -13,19 +13,73 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="50dp"
         android:padding="10dp"
         android:gravity="center"
-        android:text="点击拍照" />
+        android:text="自定义拍照" />
+
+    <TextView
+        android:id="@+id/tv_toast2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="系统拍照" />
+
+    <TextView
+        android:id="@+id/tv_toast3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast2"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="系统拍视频" />
+
+    <TextView
+        android:id="@+id/tv_toast4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast3"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="系统相册选择图片" />
+
+    <TextView
+        android:id="@+id/tv_toast5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast4"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="系统相册选择视频" />
+
+    <TextView
+        android:id="@+id/tv_toast6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast5"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="选择系统文件" />
 
     <TextView
         android:id="@+id/tv_path"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_toast"
+        app:layout_constraintTop_toBottomOf="@+id/tv_toast6"
         android:layout_marginTop="30dp"
         android:padding="10dp"
         android:gravity="center"
         android:text="路径" />
+
+    <ImageView
+        android:id="@+id/iv_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_path"
+        android:layout_marginTop="10dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

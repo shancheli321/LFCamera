@@ -6,19 +6,10 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
 
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
-    <!-- 如果你的目标SDK是Android 10（API 级别 29）及以上，并且想要访问外部存储（非沙盒），
-     你可能需要添加以下权限，但这取决于你的具体需求 -->
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
 
     <application>
         <activity android:name="com.lf.appcamera.activity.CameraActivity"
@@ -28,7 +19,44 @@
         <meta-data
             android:name="ScopedStorage"
             android:value="true" />
+
+
+        <!-- 为调用相机拍照设置内容提供者 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.lf.camera.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:ignore="WrongManifestParent">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
+
+
+
+    <!-- 获取网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 互联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--如果有多个摄像头默认使用后置摄像头-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <!--Android10以下申请这个-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--Android11(含)以上申请这个-->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
 
 </manifest>
