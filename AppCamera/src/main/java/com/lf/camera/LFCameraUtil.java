@@ -1,9 +1,5 @@
 package com.lf.camera;
 
-/**
- * @date: 2024/7/18
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +28,7 @@ import java.util.Date;
  * 调用系统拍照、系统相册
  * 使用前请自行进行权限申请
  * 拍照图片会保存在/storage/emulated/0/Android/data/<应用包名>/files/Pictures
+ *  * @date: 2024/7/18
  */
 public class LFCameraUtil {
 
