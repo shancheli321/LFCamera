@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_toast2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LFCameraUtil.getInstance().startPhotoCamera(MainActivity.this, new LFCameraListener() {
+                LFCameraUtil.startPhotoCamera(MainActivity.this, new LFCameraListener() {
                     @Override
                     public void onCanceled() {
 
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_toast3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LFCameraUtil.getInstance().startVideoCamera(MainActivity.this, new LFCameraListener() {
+                LFCameraUtil.startVideoCamera(MainActivity.this, new LFCameraListener() {
                     @Override
                     public void onCanceled() {
 
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 LFCameraFileUtil.clearCatch(MainActivity.this);
-                LFCameraUtil.getInstance().startPhotoGallery(MainActivity.this, new LFCameraListener() {
+                LFCameraUtil.startPhotoGallery(MainActivity.this, new LFCameraListener() {
                     @Override
                     public void onCanceled() {
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 LFCameraFileUtil.clearCatch(MainActivity.this);
-                LFCameraUtil.getInstance().startVideoGallery(MainActivity.this, new LFCameraListener() {
+                LFCameraUtil.startVideoGallery(MainActivity.this, new LFCameraListener() {
                     @Override
                     public void onCanceled() {
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 LFCameraFileUtil.clearCatch(MainActivity.this);
-                LFCameraUtil.getInstance().startFileChooser(MainActivity.this, new LFCameraListener() {
+                LFCameraUtil.startFileChooser(MainActivity.this, new LFCameraListener() {
                     @Override
                     public void onCanceled() {
 
@@ -138,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        LFCameraUtil.getInstance().onActivityResult(MainActivity.this, requestCode, resultCode, data);
 
         if (requestCode == 10001 && resultCode == RESULT_OK) {
             String capturePath = null;
