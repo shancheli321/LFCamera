@@ -30,7 +30,7 @@
         <!-- 为调用相机拍照设置内容提供者 -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.lf.camera.fileProvider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:ignore="WrongManifestParent">

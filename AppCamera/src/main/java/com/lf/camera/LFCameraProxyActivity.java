@@ -231,6 +231,6 @@ public class LFCameraProxyActivity extends Activity {
     }
 
     private String getProvider(Context context) {
-        return  "com.lf.camera.fileProvider";
+        return  context.getPackageName() +  ".fileProvider";
     }
 }
