@@ -64,6 +64,15 @@
         android:text="选择系统文件" />
 
     <TextView
+        android:id="@+id/tv_toast7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast6"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="PictureSelector 选图片" />
+
+    <TextView
         android:id="@+id/tv_path"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

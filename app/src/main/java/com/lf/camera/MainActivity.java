@@ -15,6 +15,13 @@ import com.lf.AppCamera;
 import com.lf.appcamera.CaptureMode;
 import com.lf.camera.listener.LFCameraListener;
 import com.lf.camera.util.LFCameraFileUtil;
+import com.lf.picture.GlideEngine;
+import com.luck.picture.lib.basic.PictureSelector;
+import com.luck.picture.lib.config.SelectMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.interfaces.OnResultCallbackListener;
+
+import java.util.ArrayList;
 
 /**
  * @date: 2024/7/4
@@ -134,6 +141,30 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+
+        findViewById(R.id.tv_toast7).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PictureSelector.create(MainActivity.this)
+                        .openGallery(SelectMimeType.ofImage())
+                        .setImageEngine(GlideEngine.createGlideEngine())
+                        .forResult(new OnResultCallbackListener<LocalMedia>() {
+                            @Override
+                            public void onResult(ArrayList<LocalMedia> result) {
+
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        });
+            }
+        });
+
+
+
     }
 
 
@@ -158,5 +189,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
 
 }
