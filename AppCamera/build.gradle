@@ -40,19 +40,4 @@ dependencies {
 
     implementation 'com.github.getActivity:XXPermissions:18.63'
 
-
-    implementation 'com.github.bumptech.glide:glide:4.16.0'
-
-    // PictureSelector 基础 (必须)
-    api 'io.github.lucksiege:pictureselector:v3.11.2'
-
-    // 图片压缩 (按需引入)
-    api 'io.github.lucksiege:compress:v3.11.2'
-
-    // 图片裁剪 (按需引入)
-    api 'io.github.lucksiege:ucrop:v3.11.2'
-
-    // 自定义相机 (按需引入)
-    api 'io.github.lucksiege:camerax:v3.11.2'
-
 }

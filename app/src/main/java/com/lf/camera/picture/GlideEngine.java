@@ -1,4 +1,4 @@
-package com.lf.picture;
+package com.lf.camera.picture;
 
 import android.content.Context;
 import android.widget.ImageView;

@@ -73,10 +73,27 @@
         android:text="PictureSelector 选图片" />
 
     <TextView
+        android:id="@+id/tv_toast8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast7"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="PictureSelector 系统相册选图片" />
+
+    <TextView
+        android:id="@+id/tv_toast9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_toast8"
+        android:padding="10dp"
+        android:gravity="center"
+        android:text="PictureSelector 拍照" />
+    <TextView
         android:id="@+id/tv_path"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_toast6"
+        app:layout_constraintTop_toBottomOf="@+id/tv_toast9"
         android:layout_marginTop="30dp"
         android:padding="10dp"
         android:gravity="center"

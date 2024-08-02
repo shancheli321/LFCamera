@@ -15,7 +15,7 @@ import com.lf.AppCamera;
 import com.lf.appcamera.CaptureMode;
 import com.lf.camera.listener.LFCameraListener;
 import com.lf.camera.util.LFCameraFileUtil;
-import com.lf.picture.GlideEngine;
+import com.lf.camera.picture.GlideEngine;
 import com.luck.picture.lib.basic.PictureSelector;
 import com.luck.picture.lib.config.SelectMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -163,7 +163,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.tv_toast8).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PictureSelector.create(MainActivity.this)
+                        .openSystemGallery(SelectMimeType.ofImage())
+                        .forSystemResult(new OnResultCallbackListener<LocalMedia>() {
+                            @Override
+                            public void onResult(ArrayList<LocalMedia> result) {
 
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        });
+            }
+        });
+
+
+        findViewById(R.id.tv_toast9).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PictureSelector.create(MainActivity.this)
+                        .openCamera(SelectMimeType.ofImage())
+                        .forResult(new OnResultCallbackListener<LocalMedia>() {
+                            @Override
+                            public void onResult(ArrayList<LocalMedia> result) {
+
+                            }
+
+                            @Override
+                            public void onCancel() {
+
+                            }
+                        });
+            }
+        });
 
     }
 
