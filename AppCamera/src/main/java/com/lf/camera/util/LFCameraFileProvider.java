@@ -1,4 +1,4 @@
-package com.lf.camera;
+package com.lf.camera.util;
 
 import androidx.core.content.FileProvider;
 

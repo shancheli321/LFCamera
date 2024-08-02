@@ -1,4 +1,4 @@
-package com.lf.camera;
+package com.lf.camera.constants;
 
 /**
  * @date: 2024/8/1

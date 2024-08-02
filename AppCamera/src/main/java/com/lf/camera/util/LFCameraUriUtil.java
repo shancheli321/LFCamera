@@ -1,4 +1,4 @@
-package com.lf.camera;
+package com.lf.camera.util;
 
 import android.content.Context;
 import android.database.Cursor;
