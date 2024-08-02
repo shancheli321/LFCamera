@@ -61,9 +61,9 @@ public class LFCameraUtil {
      * @param context
      * @param callback
      */
-    public static void startVideoCamera(Context context, LFCameraListener callback) {
+    public static void startVideoCamera(Context context, int duration, LFCameraListener callback) {
         getInstance().callback = callback;
-        LFCameraProxyActivity.runActivity(context, LFCAMERA_TAKE_VIDEO_CHOOSER_REQUEST_CODE);
+        LFCameraProxyActivity.runActivity(context, LFCAMERA_TAKE_VIDEO_CHOOSER_REQUEST_CODE, duration);
     }
 
     /**

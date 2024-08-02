@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.tv_toast3).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LFCameraUtil.startVideoCamera(MainActivity.this, new LFCameraListener() {
+                LFCameraUtil.startVideoCamera(MainActivity.this,  10,new LFCameraListener() {
                     @Override
                     public void onCanceled() {
 

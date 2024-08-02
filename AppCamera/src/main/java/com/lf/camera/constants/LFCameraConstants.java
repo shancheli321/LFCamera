@@ -32,7 +32,16 @@ public class LFCameraConstants {
     public static final int LFCAMERA_TAKE_VIDEO_CHOOSER_REQUEST_CODE = 33007;
 
 
-
+    /**
+     * 动作类型
+     */
     public static final String LFCAMERA_INTENT_TYPE = "LFCAMERA_INTENT_TYPE";
+
+
+    /**
+     * 拍摄视频最大时长
+     */
+    public static final String LFCAMERA_INTENT_DURATION = "LFCAMERA_INTENT_DURATION";
+
 
 }

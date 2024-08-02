@@ -1,5 +1,6 @@
 package com.lf.camera;
 
+import static com.lf.camera.constants.LFCameraConstants.LFCAMERA_INTENT_DURATION;
 import static com.lf.camera.constants.LFCameraConstants.LFCAMERA_INTENT_TYPE;
 import static com.lf.camera.constants.LFCameraConstants.LFCAMERA_PICK_FILE_CHOOSER_REQUEST_CODE;
 import static com.lf.camera.constants.LFCameraConstants.LFCAMERA_PICK_IMAGE_CHOOSER_REQUEST_CODE;
@@ -33,11 +34,23 @@ import java.util.Date;
  */
 public class LFCameraProxyActivity extends Activity {
 
+    private static final int VIDEO_DURATION = 3 * 60;
+
     private Context mContext;
+
+    // 默认三分钟
+    private int mVideoDuration = VIDEO_DURATION;
 
     public static void runActivity(Context context, int type) {
         Intent intent = new Intent(context, LFCameraProxyActivity.class);
         intent.putExtra(LFCAMERA_INTENT_TYPE, type);
+        context.startActivity(intent);
+    }
+
+    public static void runActivity(Context context, int type, int duration) {
+        Intent intent = new Intent(context, LFCameraProxyActivity.class);
+        intent.putExtra(LFCAMERA_INTENT_TYPE, type);
+        intent.putExtra(LFCAMERA_INTENT_DURATION, duration);
         context.startActivity(intent);
     }
 
@@ -66,6 +79,8 @@ public class LFCameraProxyActivity extends Activity {
         } else if (type == LFCAMERA_PICK_IMAGE_CHOOSER_REQUEST_CODE) {
             startPhotoGallery();
         } else if (type == LFCAMERA_TAKE_VIDEO_CHOOSER_REQUEST_CODE) {
+
+            mVideoDuration = intent.getIntExtra(LFCAMERA_INTENT_DURATION, VIDEO_DURATION);
             startVideoCamera();
         }
 
@@ -89,7 +104,7 @@ public class LFCameraProxyActivity extends Activity {
     }
 
 
-    public void startVideoCamera() {
+    private void startVideoCamera() {
         Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 
         //这句作用是如果没有相机则该应用不会闪退，要是不加这句则当系统没有相机应用的时候该应用会闪退
@@ -98,6 +113,10 @@ public class LFCameraProxyActivity extends Activity {
 
             Uri imageUri = FileProvider.getUriForFile(mContext, getProvider(mContext), new File(LFCameraUtil.getOutputFilePath()));
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+
+            intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, mVideoDuration); // 设置最大录制时长（秒）
+//            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1); // 设置视频质量（0 = 低质量，1 = 高质量）
+
             startActivityForResult(intent, LFCAMERA_TAKE_VIDEO_CHOOSER_REQUEST_CODE);
         }
     }
@@ -105,7 +124,7 @@ public class LFCameraProxyActivity extends Activity {
     /**
      * 启动图库选择器(Activity)
      */
-    public void startPhotoGallery() {
+    private void startPhotoGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
 
@@ -118,7 +137,7 @@ public class LFCameraProxyActivity extends Activity {
     /**
      * 启动视频选择器
      */
-    public void startVideoGallery() {
+    private void startVideoGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
         intent.setType("video/*");
 
@@ -132,7 +151,7 @@ public class LFCameraProxyActivity extends Activity {
     /**
      * 启动文件选择器(Activity)
      */
-    public void startFileChooser() {
+    private void startFileChooser() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("*/*");
