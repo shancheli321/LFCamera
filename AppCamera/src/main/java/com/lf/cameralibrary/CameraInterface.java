@@ -51,7 +51,7 @@ import static android.graphics.Bitmap.createBitmap;
 @SuppressWarnings("deprecation")
 public class CameraInterface implements Camera.PreviewCallback {
 
-    private static final String TAG = "CJT";
+    private static final String TAG = "CameraInterface--camera--";
 
     private volatile static CameraInterface mCameraInterface;
 
@@ -395,9 +395,9 @@ public class CameraInterface implements Camera.PreviewCallback {
                 mCamera.setPreviewCallback(this); //每一帧回调
                 mCamera.startPreview();//启动浏览
                 isPreviewing = true;
-                Log.i(TAG, "=== Start Preview ===");
-            } catch (IOException e) {
-                e.printStackTrace();
+                Log.d(TAG, "=== Start Preview ===");
+            } catch (Exception e) {
+                Log.d(TAG, "doStartPreview--预览异常---" + e);
             }
         }
     }
@@ -553,7 +553,10 @@ public class CameraInterface implements Camera.PreviewCallback {
             videoSize = CameraParamUtil.getInstance().getPreviewSize(mParams.getSupportedVideoSizes(), 600,
                     screenProp);
         }
-        Log.i(TAG, "setVideoSize    width = " + videoSize.width + "height = " + videoSize.height);
+        Log.d(TAG, "mParams---" + mParams.toString());
+        Log.d(TAG, "setVideoSize--    width = " + videoSize.width + "height = " + videoSize.height);
+        Log.d(TAG, "preview--    preview_width = " + preview_width + "preview_height = " + preview_height);
+
         if (videoSize.width == videoSize.height) {
             mediaRecorder.setVideoSize(preview_width, preview_height);
         } else {
@@ -593,10 +596,15 @@ public class CameraInterface implements Camera.PreviewCallback {
 
         if (DeviceUtil.isHuaWeiRongyao()) {
             mediaRecorder.setVideoEncodingBitRate(4 * 100000);
+            Log.d(TAG, "setVideoEncodingBitRate---4 * 100000" );
+
         } else {
             mediaRecorder.setVideoEncodingBitRate(mediaQuality);
+            Log.d(TAG, "setVideoEncodingBitRate---" + mediaQuality);
+
         }
         mediaRecorder.setPreviewDisplay(surface);
+
 
         videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
         if (saveVideoPath.equals("")) {
@@ -610,18 +618,18 @@ public class CameraInterface implements Camera.PreviewCallback {
             isRecorder = true;
         } catch (IllegalStateException e) {
             e.printStackTrace();
-            Log.i("CJT", "startRecord IllegalStateException");
+            Log.d(TAG, "startRecord IllegalStateException");
             if (this.errorLisenter != null) {
                 this.errorLisenter.onError();
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.i("CJT", "startRecord IOException");
+            Log.d(TAG, "startRecord IOException");
             if (this.errorLisenter != null) {
                 this.errorLisenter.onError();
             }
         } catch (RuntimeException e) {
-            Log.i("CJT", "startRecord RuntimeException");
+            Log.d(TAG, "startRecord RuntimeException");
         }
     }
 

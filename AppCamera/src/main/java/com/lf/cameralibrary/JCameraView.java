@@ -49,7 +49,8 @@ import java.io.IOException;
  */
 public class JCameraView extends FrameLayout implements CameraInterface.CameraOpenOverCallback, SurfaceHolder
         .Callback, CameraView {
-//    private static final String TAG = "JCameraView";
+
+    private static final String TAG = "JCameraView--camera--";
 
     //Camera状态机
     private CameraMachine machine;
@@ -533,8 +534,8 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                     });
                     mMediaPlayer.setLooping(true);
                     mMediaPlayer.prepare();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.d(TAG, "playVideo---播放异常---" + e);
                 }
             }
         }).start();
