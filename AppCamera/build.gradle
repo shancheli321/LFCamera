@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         minSdkVersion 26
-        targetSdkVersion 31
+        targetSdkVersion 33
         consumerProguardFiles "consumer-rules.pro"
     }
 

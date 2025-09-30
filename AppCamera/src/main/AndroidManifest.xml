@@ -5,12 +5,14 @@
 
     <application>
         <activity android:name="com.lf.appcamera.activity.CameraActivity"
+            android:exported="false"
         />
 
         <activity android:name=".LFCameraProxyActivity"
             android:configChanges="keyboardHidden|orientation|screenLayout|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:screenOrientation="portrait"
+            android:exported="false"
             />
 
         <!-- 告知 XXPermissions 当前项目已经适配了分区存储特性 -->
